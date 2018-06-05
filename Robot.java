@@ -5,10 +5,10 @@ import org.jabotics.robot.en.*;
 /**
  * Describe your class test here.
  * 
- * @author  (your name) 
+ * @author  (your name)
  * @version (a version number or date)
  */
-public class test extends XRobot
+public class Robot extends XRobot
 {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Definition of all objects that are necessary to control the robot in standard configuration
@@ -41,14 +41,14 @@ public class test extends XRobot
         pilot.moveStraight(FORWARD);
         while(true){
             if(ultrasonicSensor.getMeasuredValue() < 200){
-                pilot.setTargetSpeedToMax();
+                pilot.setTargetSpeed(-255);
             } else {
                 pilot.setTargetSpeed(0);
             }
             if(lightSensor.getMeasuredValue() < 40){
-                pilot.setTargetSpeed(0);
+                pilot.setTargetSpeed(150);
                 display.clear();
-                display.write("Light value: " + lightSensor.getMeasuredValue(), 1,1);
+                display.write("Light value: " + lightSensor.getMeasuredValue(), 5,5);
             }
             if(escapeButton.isPressed()){
                 pilot.setTargetSpeed(0);
