@@ -42,10 +42,12 @@ public class test extends XRobot
         while(true){
             if(ultrasonicSensor.getMeasuredValue() < 50){
                 pilot.setTargetSpeedToMax();
-                if(lightSensor.getMeasuredValue() < 40){
-                    pilot.setTargetSpeed(0);
-                    break;
-                }
+            } else {
+                pilot.setTargetSpeed(0);
+            }
+            if(lightSensor.getMeasuredValue() < 40){
+                pilot.setTargetSpeed(0);
+                break;
             }
         }
 
