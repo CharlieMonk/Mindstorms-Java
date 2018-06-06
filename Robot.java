@@ -12,7 +12,7 @@ public class Robot extends XRobot
 {
     static final IMotor leftMotor = objectFactory.createMotor(EMotorPort.C);
     static final IMotor rightMotor = objectFactory.createMotor(EMotorPort.B);
-    //static final IMotor sideMotor = objectFactory.createMotor(EMotorPort.A);
+    static final IMotor sideMotor = objectFactory.createMotor(EMotorPort.A);
     static final IPilot pilot = objectFactory.createPilot(EMotorPort.B, EMotorPort.C);
     //static final IPilot pilot2 = objectFactory.createPilot(EMotorPort.A);
     //static final ITouchSensor enterButton = objectFactory.createTouchSensor(EButton.ENTER);
@@ -42,15 +42,25 @@ public class Robot extends XRobot
             display.write("Dist val: " + ultra, 1, 2);
             float light = lightSensor.getMeasuredValue();
             display.write("Light val: " + light, 1,1);
-            if(ultra < 100){
-                pilot.moveCurvature(-5,FORWARD);
-                pilot.setTargetSpeedToMax();
-            } else if(light < 40){
+            if(light < 40){
                 pilot.moveStraight(BACKWARD);
                 pilot.setTargetSpeedToMax();
                 display.clear();
+            } else if(ultra < 10){
+                pilot.moveStraight(FORWARD);
+                pilot.setTargetSpeedToMax();
+                sideMotor.rotate(FORWARD);
+            } else if(ultra < 100){
+                pilot.moveCurvature(-5, FORWARD);
+                //sideMotor.setTargetSpeedToMax();
+                pilot.setTargetSpeedToMax();
+                
             } else {
-                pilot.rotateByAngle(-25, EWaitingMode.START);
+                //pilot.rotateByAngle(-50, EWaitingMode.START);
+                leftMotor.rotate(FORWARD);
+                leftMotor.setTargetSpeed(150);
+                rightMotor.rotate(BACKWARD);
+                rightMotor.setTargetSpeed(150);
                 pilot.setTargetSpeedToMax();
                 rotations++;
                 display.write("Rot: " + rotations, 1, 3);
