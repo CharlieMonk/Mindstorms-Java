@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Robot
-comment0.text=\r\n\ Describe\ your\ class\ test\ here.\r\n\ \r\n\ @author\ \ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ date)\r\n
+comment0.text=\r\n\ Describe\ your\ class\ test\ here.\r\n\ \r\n\ @author\ \ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ date)\r\n
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
 comment1.text=\r\n\ The\ methode\ "main"\ (the\ "main\ program")\ is\ the\ starting\ point\ for\ the\ robot\ program.\r\n\ In\ this\ method\ you\ will\ implement\ your\ own\ robot\ control.\r\n\ Replace\ the\ sample\ code\ by\ your\ own\ instructions.\r\n
