@@ -42,8 +42,8 @@ public class Robot extends XRobot
             display.write("Dist val: " + ultra, 1, 2);
             float light = lightSensor.getMeasuredValue();
             display.write("Light val: " + light, 1,1);
-            if(ultra < 70){
-                pilot.moveStraight(FORWARD);
+            if(ultra < 100){
+                pilot.moveCurvature(-5,FORWARD);
                 pilot.setTargetSpeedToMax();
             } else if(light < 40){
                 pilot.moveStraight(BACKWARD);
