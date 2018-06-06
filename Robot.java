@@ -36,22 +36,25 @@ public class Robot extends XRobot
         lightSensor.switchLightOn();
         pilot.moveStraight(FORWARD);
         //pilot.setTargetSpeedToMax();
+        int rotations = 0;
         while(true){
             float ultra = ultrasonicSensor.getMeasuredValue();
             display.write("Dist val: " + ultra, 1, 2);
+            float light = lightSensor.getMeasuredValue();
+            display.write("Light val: " + light, 1,1);
             if(ultra < 70){
                 pilot.moveStraight(FORWARD);
                 pilot.setTargetSpeedToMax();
-            } else {
-                pilot.rotateByAngle(80, EWaitingMode.START);
+            } else if(light < 40){
+                pilot.moveStraight(BACKWARD);
                 pilot.setTargetSpeedToMax();
-                //pilot.setTargetSpeed(0);
-            }
-            float light = lightSensor.getMeasuredValue();
-            display.write("Light val: " + light, 1,1);
-            if(light < 40){
-                pilot.setTargetSpeed(0);
                 display.clear();
+            } else {
+                pilot.rotateByAngle(-25, EWaitingMode.START);
+                pilot.setTargetSpeedToMax();
+                rotations++;
+                display.write("Rot: " + rotations, 1, 3);
+                //pilot.setTargetSpeed(0);
             }
             if(escapeButton.isPressed()){
                 pilot.setTargetSpeed(0);
