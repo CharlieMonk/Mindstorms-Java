@@ -38,6 +38,7 @@ public class Robot extends XRobot
         //pilot.setTargetSpeedToMax();
         int rotations = 0;
         while(true){
+            boolean moved = false;
             float ultra = ultrasonicSensor.getMeasuredValue();
             display.write("Dist val: " + ultra, 1, 2);
             float light = lightSensor.getMeasuredValue();
@@ -47,11 +48,14 @@ public class Robot extends XRobot
                 pilot.setTargetSpeedToMax();
                 display.clear();
             } else if(ultra < 10){
+                moved = true;
                 pilot.moveStraight(FORWARD);
                 pilot.setTargetSpeedToMax();
                 sideMotor.rotate(FORWARD);
             } else if(ultra < 100){
-                pilot.moveCurvature(-5, FORWARD);
+                //if(moved)
+                //    rotateToPosition(float position, EWaitingMode waitingMode)
+                pilot.moveStraight(FORWARD);
                 //sideMotor.setTargetSpeedToMax();
                 pilot.setTargetSpeedToMax();
                 
