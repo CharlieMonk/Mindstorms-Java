@@ -30,12 +30,11 @@ public class Robot extends XRobot
      */
     
     public static void onEdge(){
+        pilot.stopMotion(START);
         pilot.setTargetSpeedToMax();
-        leftMotor.stopRotation(START);
-        rightMotor.stopRotation(START);
-        
-        
-        pilot.moveStraight(-10, WAIT);
+        // leftMotor.stopRotation(START);
+        // rightMotor.stopRotation(START);
+        pilot.moveStraight(-10, START);
     }
     public static void main(String[] args) throws InterruptedException
     {
