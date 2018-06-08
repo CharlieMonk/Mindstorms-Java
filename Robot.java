@@ -1,5 +1,4 @@
 
-
 import org.jabotics.robot.en.*;
 
 /**
@@ -29,38 +28,60 @@ public class Robot extends XRobot
      * In this method you will implement your own robot control.
      * Replace the sample code by your own instructions.
      */
-    public static void main(String[] args)
+    
+    public static void onEdge(){
+        pilot.setTargetSpeedToMax();
+        leftMotor.stopRotation(START);
+        rightMotor.stopRotation(START);
+        
+        
+        pilot.moveStraight(-10, WAIT);
+    }
+    public static void main(String[] args) throws InterruptedException
     {
+        Thread.sleep(5000);
         pilot.resetCounters();
-          
         lightSensor.switchLightOn();
         pilot.moveStraight(FORWARD);
         //pilot.setTargetSpeedToMax();
         int rotations = 0;
         while(true){
+            int iteration = 0;
             float ultra = ultrasonicSensor.getMeasuredValue();
             display.write("Dist val: " + ultra, 1, 2);
             float light = lightSensor.getMeasuredValue();
             display.write("Light val: " + light, 1,1);
             float side = sideMotor.getPosition();
             display.write("Side val: " + side, 1, 4);
-            if(light < 40 && light != 0){
-                pilot.moveStraight(BACKWARD);
-                pilot.setTargetSpeedToMax();
+            if(light < 40 && light != 0.0){
+                onEdge();
                 display.clear();
-            } else if(ultra < 8){
-                pilot.moveStraight(FORWARD);
-                pilot.setTargetSpeedToMax();
-                //sideMotor.rotate(FORWARD);
-                sideMotor.rotateToPosition(100, WAIT);
             } else if(ultra < 100){
-
-                pilot.moveStraight(FORWARD);
-                //sideMotor.setTargetSpeedToMax();
-                pilot.setTargetSpeedToMax();
+                if(ultra  < 15){
+                    pilot.moveStraight(FORWARD);
+                    pilot.setTargetSpeedToMax();
+                    sideMotor.rotate(BACKWARD);
+                    sideMotor.setTargetSpeedToMax();
+                    //sideMotor.rotateToPosition(-100, WAIT);                
+                } else {
+                    pilot.moveCurvature((float)-5, FORWARD);
+                    display.write("Moving curved", 1, 5);
+                    //sideMotor.setTargetSpeedToMax();
+                    pilot.setTargetSpeedToMax();
+                }
+                /*
+                while(true){
+                    if(ultra < 8 || light > 40 || escapeButton.isPressed()){
+                        break;
+                    }
+                }
+                if(ultra >= 8 && !escapeButton.isPressed())
+                    onEdge();
+                */
                 
             } else {
                 if(sideMotor.getPosition() > 20){
+                    //sideMotor.rotateTime(100, FORWARD, WAIT);
                     sideMotor.rotate(FORWARD);
                 }
                 //pilot.rotateByAngle(-50, EWaitingMode.START);
@@ -78,15 +99,6 @@ public class Robot extends XRobot
                 break;
             }
         }
-
-    
-    
-        //sideMotor.setTargetSpeedToMax();
-        // ultrasonicSensor.waitUntilBelowLimit(50);
-        // pilot.setTargetSpeed(0);
-        //display.clear();
-        //display.write("Distance in cm:", 0, 0);
-
         escapeButton.waitForReleaseEvent();
     }
 }
