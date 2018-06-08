@@ -38,7 +38,7 @@ public class Robot extends XRobot
     }
     public static void main(String[] args) throws InterruptedException
     {
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         pilot.resetCounters();
         lightSensor.switchLightOn();
         pilot.moveStraight(FORWARD);
@@ -56,10 +56,10 @@ public class Robot extends XRobot
                 onEdge();
                 display.clear();
             } else if(ultra < 100){
-                if(ultra  < 15){
+                if(ultra  < 20){
                     pilot.moveStraight(FORWARD);
                     pilot.setTargetSpeedToMax();
-                    sideMotor.rotate(BACKWARD);
+                    sideMotor.rotateToPosition((float)-100, START);
                     sideMotor.setTargetSpeedToMax();
                     //sideMotor.rotateToPosition(-100, WAIT);                
                 } else {
@@ -68,20 +68,10 @@ public class Robot extends XRobot
                     //sideMotor.setTargetSpeedToMax();
                     pilot.setTargetSpeedToMax();
                 }
-                /*
-                while(true){
-                    if(ultra < 8 || light > 40 || escapeButton.isPressed()){
-                        break;
-                    }
-                }
-                if(ultra >= 8 && !escapeButton.isPressed())
-                    onEdge();
-                */
-                
             } else {
-                if(sideMotor.getPosition() > 20){
+                if(Math.abs(sideMotor.getPosition()) > 50){
                     //sideMotor.rotateTime(100, FORWARD, WAIT);
-                    sideMotor.rotate(FORWARD);
+                    sideMotor.rotateToPosition((float)0, START);
                 }
                 //pilot.rotateByAngle(-50, EWaitingMode.START);
                 leftMotor.rotate(FORWARD);
